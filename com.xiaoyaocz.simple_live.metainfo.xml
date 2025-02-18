@@ -19,13 +19,12 @@
   </categories>
 
   <description>
-    <p>Watch live stream in a simple way.</p>
+    <p>Simple Live is a cross-platform application written with Flutter that allows you to watch
+      live streams from various platforms, including Huya, Douyu, Bilibili, and Douyin. It's
+      available on Android, iOS, Windows, macOS, Linux, and Android TV.</p>
     <p>
-      <em>NOTE: This app is only available in Simplified Chinese.</em>
+      <em>Note: This app is currently only available in Simplified Chinese.</em>
     </p>
-    <p>Simple Live is a cross-platform application that allows you to watch live streams from
-      various platforms, including Huya, Douyu, Bilibili, and Douyin. It's available on Android,
-      iOS, Windows, macOS, Linux, and Android TV.</p>
   </description>
 
   <launchable type="desktop-id">com.xiaoyaocz.simple_live.desktop</launchable>
@@ -35,6 +34,11 @@
   <url type="vcs-browser">https://github.com/xiaoyaocz/dart_simple_live</url>
 
   <content_rating type="oars-1.1" />
+
+  <branding>
+    <color type="primary" scheme_preference="light">#73c1f2</color>
+    <color type="primary" scheme_preference="dark">#206bbc</color>
+  </branding>
 
   <screenshots>
     <screenshot type="default">
