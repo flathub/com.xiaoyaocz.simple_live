@@ -101,25 +101,6 @@ modules:
               is-important: true
 
         modules:
-          - name: libv4l2
-            buildsystem: meson
-            cleanup:
-              - /sbin
-              - /bin
-            config-opts:
-              - -Dbpf=disabled
-              - -Dudevdir=/app/lib/udev
-              - -Dsystemdsystemunitdir=/dev/null
-            sources:
-              - type: archive
-                url: https://linuxtv.org/downloads/v4l-utils/v4l-utils-1.28.1.tar.xz
-                sha256: 0fa075ce59b6618847af6ea191b6155565ccaa44de0504581ddfed795a328a82
-                x-checker-data:
-                  type: anitya
-                  project-id: 9998
-                  stable-only: true
-                  url-template: https://linuxtv.org/downloads/v4l-utils/v4l-utils-$version.tar.xz
-
           - name: nv-codec-headers
             cleanup:
               - '*'
