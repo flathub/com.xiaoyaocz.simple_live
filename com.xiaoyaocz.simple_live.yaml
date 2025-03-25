@@ -54,8 +54,9 @@ modules:
         x-checker-data:
           type: json
           url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
-          version-query: '.tag_name | sub(\"v\";\"\")'
-          url-query: '.assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04-arm\\.zip")) | .browser_download_url'
+          version-query: .tag_name | sub(\"v\";\"\")
+          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04-arm\\.zip"))
+            | .browser_download_url
       - type: archive
         only-arches: [aarch64]
         strip-components: 0
@@ -65,8 +66,9 @@ modules:
         x-checker-data:
           type: json
           url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
-          version-query: '.tag_name | sub(\"v\";\"\")'
-          url-query: '.assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04\\.zip")) | .browser_download_url'
+          version-query: .tag_name | sub(\"v\";\"\")
+          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04\\.zip"))
+            | .browser_download_url
       - type: file
         path: com.xiaoyaocz.simple_live.metainfo.xml
       - type: file
@@ -91,8 +93,8 @@ modules:
           - -Dcplayer=false
         sources:
           - type: archive
-            url: https://github.com/mpv-player/mpv/archive/v0.39.0.tar.gz
-            sha256: 2ca92437affb62c2b559b4419ea4785c70d023590500e8a52e95ea3ab4554683
+            url: https://github.com/mpv-player/mpv/archive/v0.40.0.tar.gz
+            sha256: 10a0f4654f62140a6dd4d380dcf0bbdbdcf6e697556863dc499c296182f081a3
             x-checker-data:
               type: anitya
               project-id: 5348
