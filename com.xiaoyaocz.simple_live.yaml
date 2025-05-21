@@ -55,7 +55,8 @@ modules:
           type: json
           url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
           version-query: .tag_name | sub(\"v\";\"\")
-          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04\\.zip")) | .browser_download_url
+          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04\\.zip"))
+            | .browser_download_url
       - type: archive
         only-arches: [aarch64]
         strip-components: 0
@@ -66,7 +67,8 @@ modules:
           type: json
           url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
           version-query: .tag_name | sub(\"v\";\"\")
-          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04-arm\\.zip")) | .browser_download_url
+          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04-arm\\.zip"))
+            | .browser_download_url
       - type: file
         path: com.xiaoyaocz.simple_live.metainfo.xml
       - type: file
@@ -191,11 +193,11 @@ modules:
             sources:
               - type: git
                 url: https://github.com/haasn/libplacebo.git
-                commit: 1fd3c7bde7b943fe8985c893310b5269a09b46c5
+                commit: 3188549fba13bbdf3a5a98de2a38c2e71f04e21e
                 x-checker-data:
                   type: git
                   tag-pattern: ^v([\d.]+)$
-                tag: v7.349.0
+                tag: v7.351.0
             modules:
               - name: glslang
                 buildsystem: cmake-ninja
