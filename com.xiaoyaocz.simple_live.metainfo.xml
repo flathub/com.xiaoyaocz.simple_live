@@ -51,9 +51,20 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.8.3" date="2025-04-29" />
-    <release version="1.8.1" date="2025-04-24" />
-    <release version="1.7.7" date="2025-04-09" />
-    <release version="1.7.6" date="2025-02-03" />
+    <release version="1.8.6" date="2025-04-29">
+      <url type="details">https://github.com/xiaoyaocz/dart_simple_live/releases/tag/v1.8.6</url>
+    </release>
+    <release version="1.8.3" date="2025-04-29">
+      <url type="details">https://github.com/xiaoyaocz/dart_simple_live/releases/tag/v1.8.3</url>
+    </release>
+    <release version="1.8.1" date="2025-04-24">
+      <url type="details">https://github.com/xiaoyaocz/dart_simple_live/releases/tag/v1.8.1</url>
+    </release>
+    <release version="1.7.7" date="2025-04-09">
+      <url type="details">https://github.com/xiaoyaocz/dart_simple_live/releases/tag/v1.7.7</url>
+    </release>
+    <release version="1.7.6" date="2025-02-03">
+      <url type="details">https://github.com/xiaoyaocz/dart_simple_live/releases/tag/v1.7.6</url>
+    </release>
   </releases>
 </component>

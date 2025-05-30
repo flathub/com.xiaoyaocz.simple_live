@@ -49,8 +49,8 @@ modules:
         only-arches: [x86_64]
         strip-components: 0
         # Link needs to be replaced when this is upstreamed
-        url: https://github.com/s-kk/dart_simple_live/releases/download/v1.8.3/simple_live_app-1.8.3+10803-linux-ubuntu-24.04.zip
-        sha256: eeb5249e79f67d911059ba3508449a166980ed8a0416f325239495eff8484dd0
+        url: https://github.com/s-kk/dart_simple_live/releases/download/v1.8.6/simple_live_app-1.8.7+10807-linux-ubuntu-24.04.zip
+        sha256: ed56df783121eb15b03ab4709127a4e84a119df9d71a836266e29c99d9ea1431
         x-checker-data:
           type: json
           url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
@@ -61,8 +61,8 @@ modules:
         only-arches: [aarch64]
         strip-components: 0
         # Link needs to be replaced when this is upstreamed
-        url: https://github.com/s-kk/dart_simple_live/releases/download/v1.8.3/simple_live_app-1.8.3+10803-linux-ubuntu-24.04-arm.zip
-        sha256: c7b98e97433fe5953b806db098a5df2b6129a426559244def1e0bbbd3da44d78
+        url: https://github.com/s-kk/dart_simple_live/releases/download/v1.8.6/simple_live_app-1.8.7+10807-linux-ubuntu-24.04-arm.zip
+        sha256: e6069f0ae5bd68debfe45eba0082cb1081e490874fad7ea5fb7c5634adad148e
         x-checker-data:
           type: json
           url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
