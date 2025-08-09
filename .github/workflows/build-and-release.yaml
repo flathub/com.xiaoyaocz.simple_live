@@ -1,0 +1,73 @@
+name: build-and-release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    strategy:
+      matrix:
+        runners: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runners }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'xiaoyaocz/dart_simple_live'
+          ref: master
+
+      - name: Get version from pubspec.yaml
+        id: get_version
+        run: |
+          cd simple_live_app
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d ' ' -f 2 | cut -d '+' -f 1)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@f2c4f6686ca8e8d6e6d0f28410eeef506ed66aff
+        with:
+          channel: master
+          flutter-version: "3.24.5"
+          cache: true
+
+      - name: Update apt-get
+        run: sudo apt-get update
+
+      - name: Install Dependencies
+        run: sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
+
+      - name: Enable Flutter Desktop
+        run: flutter config --enable-linux-desktop
+
+      - name: Restore Packages
+        run: |
+          cd simple_live_app
+          flutter pub get
+
+      - name: Install flutter_distributor
+        run: dart pub global activate flutter_distributor
+
+      - name: Build
+        run: |
+          cd simple_live_app
+          flutter_distributor package --platform linux --targets zip --skip-clean
+
+      - name: Rename the artifact by architecture
+        run: |
+          for f in simple_live_app/build/dist/*/*.zip; do mv "$f" "${f%.*}-${{ matrix.runners }}.${f##*.}"; done
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ steps.get_version.outputs.version }}-dev-${{ github.run_number }}
+          name: Simple Live v${{ steps.get_version.outputs.version }} Build #${{ github.run_number }}
+          body: |
+            **Version:** ${{ steps.get_version.outputs.version }}
+            **Build:** #${{ github.run_number }}
+            **Branch:** dev
+            **Commit:** ${{ github.sha }}
+            
+            *This is an automated development build from the upstream.*
+          artifacts: simple_live_app/build/dist/*/simple-live-*-${{ matrix.runners }}.zip
