@@ -1,20 +1,8 @@
 app-id: com.xiaoyaocz.simple_live
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: simple_live
-add-extensions:
-  org.freedesktop.Platform.ffmpeg-full:
-    version: '24.08'
-    directory: lib/ffmpeg
-    add-ld-path: .
-cleanup:
-  - /include
-  - /lib/pkgconfig
-  - /share/man
-  - /share/doc
-cleanup-commands:
-  - mkdir -p ${FLATPAK_DEST}/lib/ffmpeg
 separate-locales: false
 finish-args:
   - --share=ipc
@@ -25,6 +13,14 @@ finish-args:
   - --share=network
   - --talk-name=org.freedesktop.ScreenSaver
   - --system-talk-name=org.freedesktop.NetworkManager.IP4Config
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/doc
+  - /share/man
+  - '*.la'
+  - '*.a'
+
 modules:
   - name: simple_live
     buildsystem: simple
@@ -41,9 +37,10 @@ modules:
       - ln -s "${FLATPAK_DEST}/simple_live_app" "${FLATPAK_DEST}/bin/simple_live"
 
       # copy metadata files
-      - install -Dm644 com.xiaoyaocz.simple_live.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
-      - install -Dm644 com.xiaoyaocz.simple_live.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
-      - install -Dm644 com.xiaoyaocz.simple_live_512.png "${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png"
+      - install -Dm644 com.xiaoyaocz.simple_live.desktop -t ${FLATPAK_DEST}/share/applications/
+      - install -Dm644 com.xiaoyaocz.simple_live.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo/
+      - install -Dm644 com.xiaoyaocz.simple_live.png -t ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/
+
     sources:
       - type: archive
         only-arches: [x86_64]
@@ -51,32 +48,35 @@ modules:
         # Link needs to be replaced when this is upstreamed
         url: https://github.com/s-kk/dart_simple_live/releases/download/v1.8.6/simple_live_app-1.8.7+10807-linux-ubuntu-24.04.zip
         sha256: ed56df783121eb15b03ab4709127a4e84a119df9d71a836266e29c99d9ea1431
-        x-checker-data:
-          type: json
-          url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
-          version-query: .tag_name | sub(\"v\";\"\")
-          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04\\.zip"))
-            | .browser_download_url
+        # x-checker-data:
+        #   type: json
+        #   url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
+        #   version-query: .tag_name | sub(\"v\";\"\")
+        #   url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04\\.zip"))
+        #     | .browser_download_url
       - type: archive
         only-arches: [aarch64]
         strip-components: 0
         # Link needs to be replaced when this is upstreamed
         url: https://github.com/s-kk/dart_simple_live/releases/download/v1.8.6/simple_live_app-1.8.7+10807-linux-ubuntu-24.04-arm.zip
         sha256: e6069f0ae5bd68debfe45eba0082cb1081e490874fad7ea5fb7c5634adad148e
-        x-checker-data:
-          type: json
-          url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
-          version-query: .tag_name | sub(\"v\";\"\")
-          url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04-arm\\.zip"))
-            | .browser_download_url
+        # x-checker-data:
+        #   type: json
+        #   url: https://api.github.com/repos/s-kk/dart_simple_live/releases/latest
+        #   version-query: .tag_name | sub(\"v\";\"\")
+        #   url-query: .assets[] | select(.name | match("simple_live_app-.*ubuntu-24.04-arm\\.zip"))
+        #     | .browser_download_url
       - type: file
         path: com.xiaoyaocz.simple_live.metainfo.xml
       - type: file
         path: com.xiaoyaocz.simple_live.desktop
       - type: file
-        dest-filename: com.xiaoyaocz.simple_live_512.png
+        dest-filename: com.xiaoyaocz.simple_live.png
         url: https://raw.githubusercontent.com/s-kk/dart_simple_live/692380b8c44ccaeafb2f9697b224e2617f6abe64/simple_live_app/assets/logo_circle_512.png
         sha256: d9b4c02f2c0efe6485f6071050fae255b8074aa170950ecc90e74c9514c69f13
+      - type: file
+        url: https://raw.githubusercontent.com/s-kk/dart_simple_live/5f0477719d616e34a0c18712adbcf537903a267f/LICENSE
+        sha256: 8732d30e41074431cfb00590d11bcf9b50a338cc0c90a6636310054ba9eeb22f
     modules:
       - name: libmpv
         cleanup:
@@ -93,8 +93,8 @@ modules:
           - -Dcplayer=false
         sources:
           - type: archive
-            url: https://github.com/mpv-player/mpv/archive/v0.40.0.tar.gz
-            sha256: 10a0f4654f62140a6dd4d380dcf0bbdbdcf6e697556863dc499c296182f081a3
+            url: https://github.com/mpv-player/mpv/archive/v0.41.0.tar.gz
+            sha256: ee21092a5ee427353392360929dc64645c54479aefdb5babc5cfbb5fad626209
             x-checker-data:
               type: anitya
               project-id: 5348
@@ -103,24 +103,7 @@ modules:
               is-important: true
 
         modules:
-          - name: nv-codec-headers
-            cleanup:
-              - '*'
-            no-autogen: true
-            make-install-args:
-              - PREFIX=/app
-            sources:
-              - type: git
-                url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-                tag: n13.0.19.0
-                commit: e844e5b26f46bb77479f063029595293aa8f812d
-                x-checker-data:
-                  type: git
-                  tag-pattern: ^n([\d.]+)$
-
           - name: libass
-            cleanup:
-              - /lib/*.la
             config-opts:
               - --disable-static
             sources:
@@ -138,6 +121,7 @@ modules:
             config-opts:
               - -DCMAKE_BUILD_TYPE=Release
               - -DBUILD_STATIC=0
+              - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
             cleanup:
               - /bin
               - /lib/cmake
@@ -169,44 +153,48 @@ modules:
                   url-template: https://breakfastquay.com/files/releases/rubberband-$version.tar.bz2
 
           - name: mujs
-            cleanup:
-              - /bin
-              - /lib/libmujs.a
+            buildsystem: autotools
             no-autogen: true
             make-args:
               - release
-              - prefix=/app
             make-install-args:
               - prefix=/app
               - install-shared
+            cleanup:
+              - /bin
             sources:
               - type: git
-                url: https://github.com/ccxvii/mujs
-                tag: 1.3.6
-                commit: cc569c5fa9a7a2498177693b5617605c2ff5b260
+                url: https://codeberg.org/ccxvii/mujs.git
+                tag: 1.3.8
+                commit: 307f18c4216420f2f56e22d8e7040baa39a6304a
                 x-checker-data:
-                  type: git
-                  tag-pattern: ^([\d.]+)$
+                  type: json
+                  url: https://codeberg.org/api/v1/repos/ccxvii/mujs/tags
+                  tag-query: .[0].name
+                  version-query: $tag
+                  timestamp-query: .[0].commit.created
+
+              # The unicode character database files are downloaded in the makefile rules `UnicodeData.txt` and `SpecialCasing.txt`.
+              # This does not work with flatpak because there is no network access during the build step.
+              #
+              # TODO: check for updated urls when updating mujs
+              - type: file
+                url: https://www.unicode.org/Public/16.0.0/ucd/UnicodeData.txt
+                sha256: ff58e5823bd095166564a006e47d111130813dcf8bf234ef79fa51a870edb48f
+
+              - type: file
+                url: https://www.unicode.org/Public/16.0.0/ucd/SpecialCasing.txt
+                sha256: 8d5de354eef79f2395a54c9c7dcebbaf3d30fc962d0f85611ea97aa973a0c451
 
           - name: libplacebo
             buildsystem: meson
+            config-opts:
+              - -Dglslang=enabled
             sources:
               - type: git
                 url: https://github.com/haasn/libplacebo.git
-                commit: 3188549fba13bbdf3a5a98de2a38c2e71f04e21e
+                tag: v7.360.1
+                commit: cee9b076f2c63104ccfd497fa79c39a867293ec4
                 x-checker-data:
                   type: git
                   tag-pattern: ^v([\d.]+)$
-                tag: v7.351.0
-            modules:
-              - name: glslang
-                buildsystem: cmake-ninja
-                config-opts:
-                  - -DBUILD_SHARED_LIBS=ON
-                cleanup:
-                  - /bin
-                  - /lib/cmake
-                sources:
-                  - type: archive
-                    url: https://github.com/KhronosGroup/glslang/archive/refs/tags/11.12.0.tar.gz
-                    sha256: 7795a97450fecd9779f3d821858fbc2d1a3bf1dd602617d95b685ccbcabc302f
