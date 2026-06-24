@@ -93,8 +93,8 @@ modules:
           - -Dcplayer=false
         sources:
           - type: archive
-            url: https://github.com/mpv-player/mpv/archive/v0.40.0.tar.gz
-            sha256: 10a0f4654f62140a6dd4d380dcf0bbdbdcf6e697556863dc499c296182f081a3
+            url: https://github.com/mpv-player/mpv/archive/v0.41.0.tar.gz
+            sha256: ee21092a5ee427353392360929dc64645c54479aefdb5babc5cfbb5fad626209
             x-checker-data:
               type: anitya
               project-id: 5348
@@ -125,8 +125,8 @@ modules:
               - --disable-static
             sources:
               - type: archive
-                url: https://github.com/libass/libass/releases/download/0.17.4/libass-0.17.4.tar.xz
-                sha256: 78f1179b838d025e9c26e8fef33f8092f65611444ffa1bfc0cfac6a33511a05a
+                url: https://github.com/libass/libass/releases/download/0.17.5/libass-0.17.5.tar.xz
+                sha256: 2dca25c0e0c837ddf00b52011b3f82cac1e4ddd3ad018227806b0c2288864acc
                 x-checker-data:
                   type: anitya
                   project-id: 1560
@@ -182,8 +182,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/ccxvii/mujs
-                tag: 1.3.6
-                commit: cc569c5fa9a7a2498177693b5617605c2ff5b260
+                tag: 1.3.7
+                commit: 05cd646bad083ed45e9e1c9846ea671d461ced30
                 x-checker-data:
                   type: git
                   tag-pattern: ^([\d.]+)$
@@ -193,11 +193,11 @@ modules:
             sources:
               - type: git
                 url: https://github.com/haasn/libplacebo.git
-                commit: 3188549fba13bbdf3a5a98de2a38c2e71f04e21e
+                commit: cee9b076f2c63104ccfd497fa79c39a867293ec4
                 x-checker-data:
                   type: git
                   tag-pattern: ^v([\d.]+)$
-                tag: v7.351.0
+                tag: v7.360.1
             modules:
               - name: glslang
                 buildsystem: cmake-ninja
